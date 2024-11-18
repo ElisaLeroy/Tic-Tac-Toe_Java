@@ -1,7 +1,4 @@
-import java.lang.reflect.Array;
 import java.util.Objects;
-import java.util.Scanner;
-import java.util.List;
 
 
 /**
@@ -10,13 +7,15 @@ import java.util.List;
 public class TicTacToe {
     private final int size;
     private Cell[][] board;
-    private Player player;
+    private Player player1;
+    private Player player2;
     private Menu menu;
-    private boolean win = true;
+    private boolean win = true; //provisoire
 
     public TicTacToe() {
         menu = new Menu();
-        player = new Player();
+        player1 = new Player();
+        player2 = new Player();
         this.size = 3;
         this.board = new Cell[size][size];
     }
@@ -25,9 +24,23 @@ public class TicTacToe {
         fillBoard();
         display();
         Coordinates coordinates = new Coordinates();
+        setPlayersRepresentation();
+        setPlayersNames();
+        menu.displayPlayersRepresentations(player1, player2);
         while (win) {
-            setOwner(player, getMoveFromPlayer(coordinates));
+            setOwner(player1, getMoveFromPlayer(coordinates, player1));
+            setOwner(player2, getMoveFromPlayer(coordinates, player2));
         }
+    }
+
+    private void setPlayersRepresentation() {
+        this.player1.setRepresentation(" X ");
+        this.player2.setRepresentation(" O ");
+    }
+
+    private void setPlayersNames(){
+        this.player1.setName("Player 1");
+        this.player2.setName("Player 2");
     }
 
     private void fillBoard() {
@@ -47,8 +60,8 @@ public class TicTacToe {
         }
     }
 
-    private Coordinates getMoveFromPlayer(Coordinates coordinates) {
-
+    private Coordinates getMoveFromPlayer(Coordinates coordinates, Player player) {
+        menu.displayPlayerNameTurn(player);
         int line = menu.menuChoiceLine() - 1;
         int column = menu.menuChoiceColumn() - 1;
         coordinates.setLine(line);
@@ -64,6 +77,7 @@ public class TicTacToe {
         try {
             if (!Objects.equals(board[line][column].getRepresentation(), "   ")) {
                 menu.displayWrongCell();
+                setOwner(player, getMoveFromPlayer(coordinates, player));
             } else {
                 Cell cell = board[line][column]; //ici, on vise la cellule seléctionnée par l'utilisateur
                 cell.setRepresentation(player.getRepresentation()); //on ne modifie pas la cellule mais ce qu'elle contient (representation)
@@ -72,7 +86,7 @@ public class TicTacToe {
             }
         } catch (Exception e) {
             System.out.println("Invalid choice, please try again");
-            getMoveFromPlayer(coordinates);
+            setOwner(player, getMoveFromPlayer(coordinates, player));
         }
     }
 
