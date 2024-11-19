@@ -29,10 +29,18 @@ public class TicTacToe {
         menu.displayTittle();
         display();
         Coordinates coordinates = new Coordinates();
-        setPlayersRepresentation();
+        //choix joueur 1
+        // choix joueur 2
+
+
+        //setPlayersRepresentation();
         setPlayersNames();
         menu.displayPlayersRepresentations(player1, player2);
         while (checkFullBoard() != 0 || !win) {
+
+
+            //pour jouer player.setOwner(fonction qui sera stocker sans sa classe et overrider pour l'ordinateur)
+            //puis vérifier la victoire
 
             setOwner(player1, getMoveFromPlayer(coordinates, player1));
             verifyWinConditions(player1, coordinates);

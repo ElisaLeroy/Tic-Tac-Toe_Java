@@ -1,4 +1,4 @@
-public class Player extends Cell{
+public class Player{
 
     private String representation;  //peut prendre les valeurs O ou X
     private String name;
@@ -7,7 +7,7 @@ public class Player extends Cell{
 
     }
 
-    @Override
+
     public String getRepresentation() {
         return representation;
     }
