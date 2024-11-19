@@ -1,16 +1,14 @@
 import java.util.Objects;
 
+import static java.lang.System.exit;
 
-/**
- *
- */
+
 public class TicTacToe {
     private final int size;
     private Cell[][] board;
     private Player player1;
     private Player player2;
     private Menu menu;
-    private boolean win = true; //provisoire
 
     public TicTacToe() {
         menu = new Menu();
@@ -20,17 +18,23 @@ public class TicTacToe {
         this.board = new Cell[size][size];
     }
 
+    /**
+     * This method run the game by calling other methods
+     */
     public void play() {
         fillBoard();
+        menu.displayTittle();
         display();
         Coordinates coordinates = new Coordinates();
         setPlayersRepresentation();
         setPlayersNames();
         menu.displayPlayersRepresentations(player1, player2);
-        while (win) {
+        while (checkFullBoard() != 0) {
             setOwner(player1, getMoveFromPlayer(coordinates, player1));
+            checkFullBoard();
             setOwner(player2, getMoveFromPlayer(coordinates, player2));
         }
+
     }
 
     private void setPlayersRepresentation() {
@@ -90,8 +94,21 @@ public class TicTacToe {
         }
     }
 
-
-
+    private int checkFullBoard(){
+        int voidCell = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j].getRepresentation().equals("   ")){
+                    voidCell += 1;
+                }
+            }
+        }
+        if (voidCell == 0) {
+            menu.displayEndGame();
+            System.exit(0);
+        }
+        return voidCell;
+    }
 }
 
 

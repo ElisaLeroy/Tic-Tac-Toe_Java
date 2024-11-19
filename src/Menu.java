@@ -3,11 +3,23 @@ import java.util.Scanner;
 
 public class Menu {
 
+    public void displayTittle(){
+        System.out.println(
+                                """
+                                 _____ _        _____             _____          \s
+                                /__   (_) ___  /__   \\__ _  ___  /__   \\___   ___\s
+                                  / /\\/ |/ __|   / /\\/ _` |/ __|   / /\\/ _ \\ / _ \\
+                                 / /  | | (__   / / | (_| | (__   / / | (_) |  __/
+                                 \\/   |_|\\___|  \\/   \\__,_|\\___|  \\/   \\___/ \\___|\n
+                                """
+        );
+    }
+
     public void displayPlayersRepresentations(Player player1, Player player2){
         System.out.println("""
                 \n
                 Player 1 -> X
-                Player 2 -> O\n
+                Player 2 -> O
                 """);
     }
 
@@ -42,7 +54,9 @@ public class Menu {
         System.out.println("This cell is not empty, please try again");
     }
 
-
+    public void displayEndGame() {
+        System.out.println("\n\n*-------------*\n End game !\n*-------------*\n");
+    }
 
 
 
