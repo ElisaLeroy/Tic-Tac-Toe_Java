@@ -55,7 +55,24 @@ public class Menu {
     }
 
     public void displayEndGame() {
-        System.out.println("\n\n*-------------*\n End game !\n*-------------*\n");
+        System.out.println("\n\n*-------------*" +
+                "\n End game \n" +
+                "There's no winner..." +
+                "*-------------*\n");
+    }
+
+    public void displayWinnerGame(Player player){
+        System.out.println(
+                """  
+                                              __     ___      _                     _\s
+                        \n\\ \\   / (_) ___| |_ ___  _ __ _   _  | |
+                         \\ \\ / /| |/ __| __/ _ \\| '__| | | | | |
+                          \\ V / | | (__| || (_) | |  | |_| | |_|
+                           \\_/  |_|\\___|\\__\\___/|_|   \\__, | (_)
+                                                      |___/    \s
+                        """
+        );
+        System.out.println(player.getName() + " is the winner");
     }
 
 
@@ -65,3 +82,4 @@ public class Menu {
 
 
 }
+

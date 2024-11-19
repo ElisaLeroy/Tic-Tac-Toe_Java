@@ -1,6 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
-
-import static java.lang.System.exit;
 
 
 public class TicTacToe {
@@ -9,6 +9,9 @@ public class TicTacToe {
     private Player player1;
     private Player player2;
     private Menu menu;
+    private boolean win = false;
+
+
 
     public TicTacToe() {
         menu = new Menu();
@@ -29,12 +32,25 @@ public class TicTacToe {
         setPlayersRepresentation();
         setPlayersNames();
         menu.displayPlayersRepresentations(player1, player2);
-        while (checkFullBoard() != 0) {
-            setOwner(player1, getMoveFromPlayer(coordinates, player1));
-            checkFullBoard();
-            setOwner(player2, getMoveFromPlayer(coordinates, player2));
-        }
+        while (checkFullBoard() != 0 || !win) {
 
+            setOwner(player1, getMoveFromPlayer(coordinates, player1));
+            verifyWinConditions(player1, coordinates);
+
+            setOwner(player2, getMoveFromPlayer(coordinates, player2));
+            verifyWinConditions(player2, coordinates);
+
+        }
+    }
+
+    private void verifyWinConditions(Player player, Coordinates coordinates){
+        checkFullBoard();
+        isWinning(coordinates, player);
+
+        if(this.win == true) {
+            menu.displayWinnerGame(player);
+            System.exit(0);
+        }
     }
 
     private void setPlayersRepresentation() {
@@ -42,7 +58,7 @@ public class TicTacToe {
         this.player2.setRepresentation(" O ");
     }
 
-    private void setPlayersNames(){
+    private void setPlayersNames() {
         this.player1.setName("Player 1");
         this.player2.setName("Player 2");
     }
@@ -94,11 +110,11 @@ public class TicTacToe {
         }
     }
 
-    private int checkFullBoard(){
+    private int checkFullBoard() {
         int voidCell = 0;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (board[i][j].getRepresentation().equals("   ")){
+                if (board[i][j].getRepresentation().equals("   ")) {
                     voidCell += 1;
                 }
             }
@@ -109,6 +125,83 @@ public class TicTacToe {
         }
         return voidCell;
     }
+
+    private void isWinning(Coordinates coordinates, Player player) {
+        int coordinateLine = coordinates.getLine();
+        int coordinateColumn = coordinates.getColumn();
+        ArrayList<String> arrayLine = new ArrayList<>(stockLineCells(coordinateLine));
+        ArrayList<String> arrayColumn = new ArrayList<>(stockColumnCells(coordinateColumn));
+        ArrayList<String> arrayFirstDiagonal = new ArrayList<>(stockFirstDiagonal());
+        ArrayList<String> arraySecondDiagonal = new ArrayList<>(stockSecondDiagonal());
+
+
+        Boolean line = checkElementsInArray(arrayLine);
+        Boolean column = checkElementsInArray(arrayColumn);
+        Boolean firstDiagonal = checkElementsInArray(arrayFirstDiagonal);
+        Boolean secondDiagonal = checkElementsInArray(arraySecondDiagonal);
+
+        if (!checkEmptyCells(arrayLine) || !checkEmptyCells(arrayColumn) || !checkEmptyCells(arraySecondDiagonal) || !checkEmptyCells(arrayFirstDiagonal))   {
+            if (line || column || firstDiagonal || secondDiagonal) {
+                this.win = true;
+            }
+        }
+    }
+
+    private  ArrayList<String> stockFirstDiagonal(){
+        ArrayList<String> stockCells = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            stockCells.add(board[i][i].getRepresentation());
+        }
+        return stockCells;
+    }
+
+    private  ArrayList<String> stockSecondDiagonal(){
+        ArrayList<String> stockCells = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            stockCells.add(board[i][size - 1 - i].getRepresentation());
+        }
+        return stockCells;
+    }
+
+    private ArrayList<String> stockLineCells(int coordinate) {
+        ArrayList<String> stockCells = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            stockCells.add(board[coordinate][i].getRepresentation());
+        }
+        return stockCells;
+    }
+
+    private ArrayList<String> stockColumnCells(int coordinate) {
+        ArrayList<String> stockCells = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            stockCells.add(board[i][coordinate].getRepresentation());
+        }
+        return stockCells;
+    }
+
+    private boolean checkEmptyCells(ArrayList<String> array) {
+        if (array.contains("   ")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkElementsInArray(ArrayList<String> cells) {
+        boolean winCells = false;
+        ArrayList<String> listX = new ArrayList<>(Arrays.asList(" X ", " X ", " X "));
+        ArrayList<String> listO = new ArrayList<>(Arrays.asList(" O ", " O ", " O "));
+
+        //on compare la liste courante (ligne ou colonne) à l'une des liste modèle
+        if (cells.equals(listX) || cells.equals(listO)) {
+            winCells = true;
+        }
+        return winCells;
+    }
+
+
 }
+
+
 
 
