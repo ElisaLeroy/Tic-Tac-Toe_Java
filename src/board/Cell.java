@@ -1,12 +1,15 @@
+package board;
 
 /**
  * Classe qui modélise une case du plateau de jeu
  */
 public class Cell  {
-    private String representation;
+    private CellType state;
+
 
     public Cell(){
-        this.representation = "   ";
+        this.state = CellType.EMPTY;
+
     }
 
 
@@ -15,10 +18,10 @@ public class Cell  {
      */
 
     public String getRepresentation(){
-        return representation;
+        return this.state.getType();
     }
-    public void setRepresentation(String representation){
-        this.representation = representation;
+    public void setState(CellType state){
+        this.state = state;
     }
 
 

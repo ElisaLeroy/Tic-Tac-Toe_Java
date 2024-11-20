@@ -1,7 +1,24 @@
-import java.sql.SQLOutput;
+package game;
+
+import board.Cell;
+import player.Player;
+import player.RealPlayer;
+
 import java.util.Scanner;
 
-public class Menu {
+public class MenuDisplay {
+
+    public int choosePlayer(String player) {
+        Scanner choice = new Scanner(System.in);
+        System.out.println("Please choose "+player +
+                """
+                        
+                        [1] Real player 
+                        [2] Computer
+                        """);
+
+        return choice.nextInt();
+    }
 
     public void displayTittle(){
         System.out.println(
@@ -15,9 +32,14 @@ public class Menu {
         );
     }
 
+    public void displayInvalidChoice(){
+        System.out.println("This choice is invalid, please try again");
+    }
+
     public void displayPlayersRepresentations(Player player1, Player player2){
         System.out.println("""
-                \n
+                
+                
                 Player 1 -> X
                 Player 2 -> O
                 """);
@@ -35,9 +57,19 @@ public class Menu {
         return choiceLine.nextInt();
     }
 
-    public void displayPlayerNameTurn(Player player){
-        System.out.println("\n\n*-------------*\n "+player.getName() + " turn\n"+"*-------------*\n");
+    public void displayBoard(int size, Cell[][] board) {
+        for (int i = 0; i < size; i++) {
+            System.out.print("\n-------------\n|");
+            for (int j = 0; j < size; j++) {
+                System.out.print(board[i][j].getRepresentation() + "|");
+            }
+        }
     }
+
+    public void displayPlayerNameTurn(String playerName){
+        System.out.println("\n\n*-------------*\n "+ playerName + " turn\n"+"*-------------*\n");
+    }
+
     public int menuChoiceColumn(){
         Scanner choiceLine = new Scanner(System.in);
         System.out.println("""
@@ -55,16 +87,17 @@ public class Menu {
     }
 
     public void displayEndGame() {
-        System.out.println("\n\n*-------------*" +
-                "\n End game \n" +
-                "There's no winner..." +
-                "*-------------*\n");
+        System.out.println("""
+           \n*-------------*" +
+          "   End game " +
+          "There's no winner..." +
+          "*-------------*""");
     }
 
     public void displayWinnerGame(Player player){
         System.out.println(
                 """  
-                        \n\n                                      _                     _\s
+                                                             _                     _\s
                         \\ \\   / (_) ___| |_ ___  _ __ _   _  | |
                          \\ \\ / /| |/ __| __/ _ \\| '__| | | | | |
                           \\ V / | | (__| || (_) | |  | |_| | |_|
