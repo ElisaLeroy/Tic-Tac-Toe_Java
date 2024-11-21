@@ -1,17 +1,26 @@
 package player;
+
+/**
+ * RealPlayer
+ * This class represent a player played by the user
+ */
+
 import board.Cell;
 import board.Coordinates;
 import board.CellType;
-import game.MenuDisplay;
+import game.UserInteraction;
+import game.View;
 import java.util.Objects;
 
 public class RealPlayer extends Player {
-    MenuDisplay menuDisplay;
+    View view;
+    UserInteraction userInteraction;
 
     public RealPlayer(CellType state, String name) {
         this.setName(name);
         this.setState(state);
-        this.menuDisplay = new MenuDisplay();
+        this.view = new View();
+        this.userInteraction = new UserInteraction();
     }
 
 
@@ -22,12 +31,12 @@ public class RealPlayer extends Player {
 
         try {
             if (!Objects.equals(board[line][column].getRepresentation(), "   ")) { //si la case est déjà occupée
-                menuDisplay.displayWrongCell(); //affiche message erreur
+                view.displayWrongCell(); //affiche message erreur
                 play(getCoordinates(coordinates), board, size); //on relance le la partie
             } else { //si la case est vide
                 Cell cell = board[line][column]; //ici, on vise la cellule seléctionnée par l'utilisateur
                 cell.setState(this.getState()); //on attribut
-                menuDisplay.displayBoard(size, board); //on affiche la grille
+                view.displayBoard(size, board); //on affiche la grille
             }
         } catch (Exception e) {
             System.out.println("Invalid choice, please try again");
@@ -36,9 +45,12 @@ public class RealPlayer extends Player {
     }
 
     public Coordinates getCoordinates(Coordinates coordinates) {
-        menuDisplay.displayPlayerNameTurn(this.getName());
-        int line = menuDisplay.menuChoiceLine() - 1;
-        int column = menuDisplay.menuChoiceColumn() - 1;
+        view.displayPlayerNameTurn(this.getName());
+        view.displayMenuChoiceLine();
+        int line = userInteraction.scannerInt() - 1;
+
+        view.menuChoiceColumn();
+        int column = userInteraction.scannerInt() - 1;
         coordinates.setLine(line);
         coordinates.setColumn(column);
         return coordinates;

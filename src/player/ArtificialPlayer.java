@@ -1,20 +1,24 @@
 package player;
 
+/**
+ * ArtificialPlayer
+ * This class represent a player played by the computer
+ */
+
 import board.Cell;
 import board.Coordinates;
 import board.CellType;
-import game.MenuDisplay;
-
+import game.View;
 import java.security.SecureRandom;
 import java.util.Objects;
 
 public class ArtificialPlayer extends Player {
-    MenuDisplay menuDisplay;
+    View menuDisplay;
 
     public ArtificialPlayer(CellType state, String name ){
         this.setName(name);
         this.setState(state);
-        this.menuDisplay = new MenuDisplay();
+        this.menuDisplay = new View();
     }
 
 
@@ -37,7 +41,7 @@ public class ArtificialPlayer extends Player {
             System.out.println("Invalid choice, please try again");
             play(getCoordinates(coordinates), board, size);
         }
-    };
+    }
 
     public Coordinates getCoordinates(Coordinates coordinates){
         menuDisplay.displayPlayerNameTurn(this.getName());

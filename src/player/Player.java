@@ -1,5 +1,4 @@
 package player;
-
 import board.Cell;
 import board.Coordinates;
 import board.CellType;

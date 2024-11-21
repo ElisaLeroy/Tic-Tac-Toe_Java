@@ -1,39 +1,47 @@
 package game;
 
+/**
+ * TicTacToe
+ *
+ * This class contain Tic tac toe game rules and methods that run the game
+ */
+
+
 import board.Cell;
 import board.Coordinates;
 import board.CellType;
 import player.ArtificialPlayer;
 import player.Player;
 import player.RealPlayer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 public class TicTacToe {
     private final int size;
     private Cell[][] board;
-    private MenuDisplay menuDisplay;
+    private View view;
+    private UserInteraction userInteraction;
     Player player1;
     Player player2;
     private boolean win = false;
 
     public TicTacToe() {
-        menuDisplay = new MenuDisplay();
+        view = new View();
+        this.userInteraction = new UserInteraction();
         this.size = 3;
         this.board = new Cell[size][size];
     }
 
     /**
+     * playGame
      * This method run the game by calling other methods
      */
     public void playGame() {
         fillBoard();
-        menuDisplay.displayTittle();
-        choosePlayer();
+        view.displayTittle();
+        instancePlayer();
         Coordinates coordinates = new Coordinates();
-        menuDisplay.displayPlayersRepresentations(player1, player2);
+        view.displayPlayersRepresentations();
 
         while (checkFullBoard() != 0 || !win) {
             player1.play((player1).getCoordinates(coordinates), board, size);
@@ -53,7 +61,7 @@ public class TicTacToe {
         isWinning(coordinates);
 
         if(this.win) {
-            menuDisplay.displayWinnerGame(player);
+            view.displayWinnerGame(player);
             System.exit(0);
         }
     }
@@ -66,34 +74,40 @@ public class TicTacToe {
         }
     }
 
-    private void choosePlayer() {
-     int choicePlayer1 = menuDisplay.choosePlayer("Player 1");
-     int choicePlayer2 = menuDisplay.choosePlayer("Player 2");
+    private void instancePlayer() {
+     int choicePlayer1 = choicePlayer("player1");
+     int choicePlayer2 = choicePlayer("player2");
      switch (choicePlayer1) {
          case 1:
              this.player1 = new RealPlayer(CellType.X, "Player 1");
              break;
          case 2:
-             this.player1 = new ArtificialPlayer(CellType.O, "Player 1");
+             this.player1 = new ArtificialPlayer(CellType.X, "Player 1");
              break;
          default:
-             menuDisplay.displayInvalidChoice();
-             choosePlayer();
+             view.displayInvalidChoice();
+             instancePlayer();
              break;
      }
 
      switch (choicePlayer2) {
+         
          case 1:
-             this.player2 = new RealPlayer(CellType.X, "Player 2");
+             this.player2 = new RealPlayer(CellType.O, "Player 2");
              break;
          case 2:
              this.player2 = new ArtificialPlayer(CellType.O, "Player 2");
              break;
          default:
-             menuDisplay.displayInvalidChoice();
-             choosePlayer();
+             view.displayInvalidChoice();
+             instancePlayer();
              break;
      }
+    }
+
+    private int choicePlayer(String player) {
+        view.displayMenuChoosePlayer(player);
+        return userInteraction.scannerInt();
     }
 
     private int checkFullBoard() {
@@ -106,7 +120,7 @@ public class TicTacToe {
             }
         }
         if (voidCell == 0) {
-            menuDisplay.displayEndGame();
+            view.displayEndGame();
             System.exit(0);
         }
         return voidCell;

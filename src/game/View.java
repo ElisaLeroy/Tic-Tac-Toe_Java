@@ -1,25 +1,29 @@
 package game;
+/**
+ * View
+ * This class contains all the display part of the game (in console)
+ */
 
 import board.Cell;
 import player.Player;
-import player.RealPlayer;
 
-import java.util.Scanner;
-
-public class MenuDisplay {
-
-    public int choosePlayer(String player) {
-        Scanner choice = new Scanner(System.in);
+public class View {
+    /**
+     * displayMenuChoosePlayer
+     * @param player
+     */
+    public void displayMenuChoosePlayer(String player) {
         System.out.println("Please choose "+player +
                 """
                         
                         [1] Real player 
                         [2] Computer
                         """);
-
-        return choice.nextInt();
     }
 
+    /**
+     * displayTittle
+     */
     public void displayTittle(){
         System.out.println(
                                 """
@@ -32,11 +36,17 @@ public class MenuDisplay {
         );
     }
 
+    /**
+     * displayInvalidChoice
+     */
     public void displayInvalidChoice(){
         System.out.println("This choice is invalid, please try again");
     }
 
-    public void displayPlayersRepresentations(Player player1, Player player2){
+    /**
+     * displayPlayersRepresentations
+     */
+    public void displayPlayersRepresentations(){
         System.out.println("""
                 
                 
@@ -45,18 +55,37 @@ public class MenuDisplay {
                 """);
     }
 
-    public int menuChoiceLine(){
-        Scanner choiceLine = new Scanner(System.in);
+    /**
+     * displayMenuChoiceLine
+     */
+    public void displayMenuChoiceLine(){
+
         System.out.println("""
                 Choose the line
                 [1] First line
                 [2] Second line
                 [3] Third line
                 """);
-
-        return choiceLine.nextInt();
     }
 
+    /**
+     * menuChoiceColumn
+     */
+    public void menuChoiceColumn(){
+        System.out.println("""
+                
+                Choose the column
+                [1] First column
+                [2] Second column
+                [3] Third column
+                """);
+    }
+
+    /**
+     * displayBoard
+     * @param size
+     * @param board
+     */
     public void displayBoard(int size, Cell[][] board) {
         for (int i = 0; i < size; i++) {
             System.out.print("\n-------------\n|");
@@ -66,34 +95,36 @@ public class MenuDisplay {
         }
     }
 
+    /**
+     * displayPlayerNameTurn
+     * @param playerName
+     */
     public void displayPlayerNameTurn(String playerName){
         System.out.println("\n\n*-------------*\n "+ playerName + " turn\n"+"*-------------*\n");
     }
 
-    public int menuChoiceColumn(){
-        Scanner choiceLine = new Scanner(System.in);
-        System.out.println("""
-                
-                Choose the column
-                [1] First column
-                [2] Second column
-                [3] Third column
-                """);
-        return choiceLine.nextInt();
-    }
-
+    /**
+     * displayWrongCell
+     */
     public void displayWrongCell(){
         System.out.println("This cell is not empty, please try again");
     }
 
+    /**
+     * displayEndGame
+     */
     public void displayEndGame() {
         System.out.println("""
-           \n*-------------*" +
+           *-------------*" +
           "   End game " +
           "There's no winner..." +
           "*-------------*""");
     }
 
+    /**
+     * displayWinnerGame
+     * @param player
+     */
     public void displayWinnerGame(Player player){
         System.out.println(
                 """  

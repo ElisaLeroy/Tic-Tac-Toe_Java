@@ -1,8 +1,9 @@
 package board;
 
 /**
- * Classe qui modélise une case du plateau de jeu
+ * models a board's cell
  */
+
 public class Cell  {
     private CellType state;
 
@@ -14,12 +15,19 @@ public class Cell  {
 
 
     /**
-     * @return String qui représente une cellule
+     * getRepresentation
+     * to get the cell's representation
+     * @return String
      */
-
     public String getRepresentation(){
         return this.state.getType();
     }
+
+    /**
+     *setState
+     * To set the cell's state
+     * @param state
+     */
     public void setState(CellType state){
         this.state = state;
     }
