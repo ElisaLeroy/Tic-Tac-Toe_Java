@@ -1,10 +1,12 @@
 package board;
 
 /**
- * CellType
+ * State
  * This enum stock states that can be used by the board or the player
+ * 3 states can be allocated to a Cell, his default state is EMPTY
+ * X and O states can also be used by players
  */
-public enum CellType {
+public enum State {
 
     EMPTY("   "),
     X(" X "),
@@ -12,7 +14,7 @@ public enum CellType {
 
     private String type;
 
-    CellType(String type) {
+    State(String type) {
         this.type = type;
     }
     public String getType() {

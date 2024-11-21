@@ -1,11 +1,11 @@
 package player;
 import board.Cell;
 import board.Coordinates;
-import board.CellType;
+import board.State;
 
 public abstract class Player {
     private String name;
-    private CellType state;
+    private State state;
 
     public Player() {
 
@@ -16,10 +16,10 @@ public abstract class Player {
     public String getRepresentation() {
         return this.state.getType();
     }
-    public void setState(CellType state) {
+    public void setState(State state) {
         this.state = state;
     }
-    public CellType getState() {
+    public State getState() {
         return this.state;
     }
     public String getName() {

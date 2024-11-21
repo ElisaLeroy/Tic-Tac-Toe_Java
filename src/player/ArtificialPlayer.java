@@ -7,7 +7,7 @@ package player;
 
 import board.Cell;
 import board.Coordinates;
-import board.CellType;
+import board.State;
 import game.View;
 import java.security.SecureRandom;
 import java.util.Objects;
@@ -15,7 +15,7 @@ import java.util.Objects;
 public class ArtificialPlayer extends Player {
     View menuDisplay;
 
-    public ArtificialPlayer(CellType state, String name ){
+    public ArtificialPlayer(State state, String name ){
         this.setName(name);
         this.setState(state);
         this.menuDisplay = new View();

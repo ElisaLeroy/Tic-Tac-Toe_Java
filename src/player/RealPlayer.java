@@ -7,7 +7,7 @@ package player;
 
 import board.Cell;
 import board.Coordinates;
-import board.CellType;
+import board.State;
 import game.UserInteraction;
 import game.View;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class RealPlayer extends Player {
     View view;
     UserInteraction userInteraction;
 
-    public RealPlayer(CellType state, String name) {
+    public RealPlayer(State state, String name) {
         this.setName(name);
         this.setState(state);
         this.view = new View();
@@ -46,14 +46,29 @@ public class RealPlayer extends Player {
 
     public Coordinates getCoordinates(Coordinates coordinates) {
         view.displayPlayerNameTurn(this.getName());
-        view.displayMenuChoiceLine();
-        int line = userInteraction.scannerInt() - 1;
 
-        view.menuChoiceColumn();
-        int column = userInteraction.scannerInt() - 1;
+        view.displayMenuChoiceLine();
+        int line = getPlayerChoice() - 1;
+
+        view.displayMenuChoiceColumn();
+        int column = getPlayerChoice() - 1;
+
+
         coordinates.setLine(line);
         coordinates.setColumn(column);
         return coordinates;
+    }
+
+    private int getPlayerChoice() {
+        int choice = 0;
+        while (choice == 0) {
+            try {
+                choice = userInteraction.scannerInt();
+            } catch (Exception e) {
+                view.displayInvalidChoice();
+            }
+        }
+        return choice;
     }
 
 

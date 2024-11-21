@@ -2,21 +2,22 @@ package game;
 
 /**
  * TicTacToe
- *
  * This class contain Tic tac toe game rules and methods that run the game
  */
 
 
 import board.Cell;
 import board.Coordinates;
-import board.CellType;
+import board.State;
 import player.ArtificialPlayer;
 import player.Player;
 import player.RealPlayer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 
-public class TicTacToe {
+public class TicTacToe extends BoardGame {
     private final int size;
     private Cell[][] board;
     private View view;
@@ -50,17 +51,15 @@ public class TicTacToe {
             player2.play((player2).getCoordinates(coordinates), board, size);
             verifyWinConditions(player2, coordinates);
 
-            if(win) break;
+            if (win) break;
         }
     }
 
-
-
-    private void verifyWinConditions(Player player, Coordinates coordinates){
+    private void verifyWinConditions(Player player, Coordinates coordinates) {
         checkFullBoard();
         isWinning(coordinates);
 
-        if(this.win) {
+        if (this.win) {
             view.displayWinnerGame(player);
             System.exit(0);
         }
@@ -75,39 +74,47 @@ public class TicTacToe {
     }
 
     private void instancePlayer() {
-     int choicePlayer1 = choicePlayer("player1");
-     int choicePlayer2 = choicePlayer("player2");
-     switch (choicePlayer1) {
-         case 1:
-             this.player1 = new RealPlayer(CellType.X, "Player 1");
-             break;
-         case 2:
-             this.player1 = new ArtificialPlayer(CellType.X, "Player 1");
-             break;
-         default:
-             view.displayInvalidChoice();
-             instancePlayer();
-             break;
-     }
+        int choicePlayer1 = choicePlayer("player1");
+        int choicePlayer2 = choicePlayer("player2");
+        switch (choicePlayer1) {
+            case 1:
+                this.player1 = new RealPlayer(State.X, "Player 1");
+                break;
+            case 2:
+                this.player1 = new ArtificialPlayer(State.X, "Player 1");
+                break;
+            default:
+                view.displayInvalidChoice();
+                instancePlayer();
+                break;
+        }
 
-     switch (choicePlayer2) {
-         
-         case 1:
-             this.player2 = new RealPlayer(CellType.O, "Player 2");
-             break;
-         case 2:
-             this.player2 = new ArtificialPlayer(CellType.O, "Player 2");
-             break;
-         default:
-             view.displayInvalidChoice();
-             instancePlayer();
-             break;
-     }
+        switch (choicePlayer2) {
+
+            case 1:
+                this.player2 = new RealPlayer(State.O, "Player 2");
+                break;
+            case 2:
+                this.player2 = new ArtificialPlayer(State.O, "Player 2");
+                break;
+            default:
+                view.displayInvalidChoice();
+                instancePlayer();
+                break;
+        }
     }
 
-    private int choicePlayer(String player) {
-        view.displayMenuChoosePlayer(player);
-        return userInteraction.scannerInt();
+    private int choicePlayer(String player) throws InputMismatchException {
+        int choice = 0;
+        while (choice == 0) {
+            try {
+                view.displayMenuPlayerChoice(player);
+                choice = userInteraction.scannerInt();
+            } catch (Exception e) {
+                view.displayInvalidChoice();
+            }
+        }
+        return choice;
     }
 
     private int checkFullBoard() {
@@ -126,7 +133,7 @@ public class TicTacToe {
         return voidCell;
     }
 
-    private  ArrayList<String> stockFirstDiagonal(){
+    private ArrayList<String> stockFirstDiagonal() {
         ArrayList<String> stockCells = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             stockCells.add(board[i][i].getRepresentation());
@@ -134,7 +141,7 @@ public class TicTacToe {
         return stockCells;
     }
 
-    private  ArrayList<String> stockSecondDiagonal(){
+    private ArrayList<String> stockSecondDiagonal() {
         ArrayList<String> stockCells = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             stockCells.add(board[i][size - 1 - i].getRepresentation());
@@ -192,7 +199,7 @@ public class TicTacToe {
         Boolean firstDiagonal = checkElementsInArray(arrayFirstDiagonal);
         Boolean secondDiagonal = checkElementsInArray(arraySecondDiagonal);
 
-        if ((!checkEmptyCells(arrayLine) || !checkEmptyCells(arrayColumn) || !checkEmptyCells(arraySecondDiagonal) || !checkEmptyCells(arrayFirstDiagonal)) && (line || column || firstDiagonal || secondDiagonal))   {
+        if ((!checkEmptyCells(arrayLine) || !checkEmptyCells(arrayColumn) || !checkEmptyCells(arraySecondDiagonal) || !checkEmptyCells(arrayFirstDiagonal)) && (line || column || firstDiagonal || secondDiagonal)) {
             this.win = true;
         }
     }

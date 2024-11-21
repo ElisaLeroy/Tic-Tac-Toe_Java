@@ -5,11 +5,11 @@ package board;
  */
 
 public class Cell  {
-    private CellType state;
+    private State state;
 
 
     public Cell(){
-        this.state = CellType.EMPTY;
+        this.state = State.EMPTY;
 
     }
 
@@ -28,7 +28,7 @@ public class Cell  {
      * To set the cell's state
      * @param state
      */
-    public void setState(CellType state){
+    public void setState(State state){
         this.state = state;
     }
 

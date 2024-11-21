@@ -8,17 +8,44 @@ import board.Cell;
 import player.Player;
 
 public class View {
+
     /**
      * displayMenuChoosePlayer
      * @param player
      */
-    public void displayMenuChoosePlayer(String player) {
+    public void displayMenuPlayerChoice(String player) {
         System.out.println("Please choose "+player +
                 """
                         
                         [1] Real player 
                         [2] Computer
                         """);
+    }
+
+    /**
+     * displayMenuChoiceLine
+     */
+    public void displayMenuChoiceLine(){
+
+        System.out.println("""
+                Choose the line
+                [1] First line
+                [2] Second line
+                [3] Third line
+                """);
+    }
+
+    /**
+     * menuChoiceColumn
+     */
+    public void displayMenuChoiceColumn(){
+        System.out.println("""
+                
+                Choose the column
+                [1] First column
+                [2] Second column
+                [3] Third column
+                """);
     }
 
     /**
@@ -52,32 +79,6 @@ public class View {
                 
                 Player 1 -> X
                 Player 2 -> O
-                """);
-    }
-
-    /**
-     * displayMenuChoiceLine
-     */
-    public void displayMenuChoiceLine(){
-
-        System.out.println("""
-                Choose the line
-                [1] First line
-                [2] Second line
-                [3] Third line
-                """);
-    }
-
-    /**
-     * menuChoiceColumn
-     */
-    public void menuChoiceColumn(){
-        System.out.println("""
-                
-                Choose the column
-                [1] First column
-                [2] Second column
-                [3] Third column
                 """);
     }
 
