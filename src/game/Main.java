@@ -4,7 +4,7 @@ package game;
 public class Main {
     public static void main(String[] args){
 
-    TicTacToe game = new TicTacToe();
+    Gomoku game = new Gomoku();
         game.playGame();
     }
 }

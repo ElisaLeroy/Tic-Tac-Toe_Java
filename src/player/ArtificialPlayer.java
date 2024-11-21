@@ -30,7 +30,7 @@ public class ArtificialPlayer extends Player {
         try {
             if (!Objects.equals(board[line][column].getRepresentation(), "   ")) { //si la case est déjà occupée
                 menuDisplay.displayWrongCell(); //affiche message erreur
-                play(getCoordinates(coordinates), board, size); //on relance le la partie
+                play(getCoordinates(coordinates, size), board, size); //on relance le la partie
             } else { //si la case est vide
                 Cell cell = board[line][column]; //ici, on vise la cellule seléctionnée par l'utilisateur
                 cell.setState(this.getState()); //on ne modifie pas la cellule mais ce qu'elle contient (representation)
@@ -39,15 +39,15 @@ public class ArtificialPlayer extends Player {
             }
         } catch (Exception e) {
             System.out.println("Invalid choice, please try again");
-            play(getCoordinates(coordinates), board, size);
+            play(getCoordinates(coordinates, size), board, size);
         }
     }
 
-    public Coordinates getCoordinates(Coordinates coordinates){
+    public Coordinates getCoordinates(Coordinates coordinates, int size){
         menuDisplay.displayPlayerNameTurn(this.getName());
         final SecureRandom secureRandom = new SecureRandom();
-        int randomLine = secureRandom.nextInt(3);
-        int randomColumn = secureRandom.nextInt(3);
+        int randomLine = secureRandom.nextInt(size);
+        int randomColumn = secureRandom.nextInt(size);
         System.out.println(randomLine + " : line - "+ randomColumn + " : column");
 
         coordinates.setLine(randomLine);

@@ -23,6 +23,10 @@ public class Cell  {
         return this.state.getType();
     }
 
+    public State getState(){
+        return this.state;
+    }
+
     /**
      *setState
      * To set the cell's state

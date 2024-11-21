@@ -1,4 +1,8 @@
 package game;
 
-public class ConnectFour {
+public class ConnectFour extends BoardGame{
+
+    public ConnectFour() {
+
+    }
 }

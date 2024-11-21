@@ -1,11 +1,5 @@
 package game;
 
-/**
- * TicTacToe
- * This class contain Tic tac toe game rules and methods that run the game
- */
-
-
 import board.Cell;
 import board.Coordinates;
 import board.State;
@@ -17,7 +11,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class TicTacToe extends BoardGame {
+
+public class Gomoku extends BoardGame {
+
+    public Gomoku() {
+        view = new View();
+        this.userInteraction = new UserInteraction();
+        this.size = 15;
+        this.board = new Cell[size][size];
+    }
+
     private final int size;
     private Cell[][] board;
     private View view;
@@ -26,38 +29,28 @@ public class TicTacToe extends BoardGame {
     Player player2;
     private boolean win = false;
 
-    public TicTacToe() {
-        view = new View();
-        this.userInteraction = new UserInteraction();
-        this.size = 15;
-        this.board = new Cell[size][size];
-    }
 
-    /**
-     * playGame
-     * This method run the game by calling other methods
-     */
     public void playGame() {
         fillBoard();
-        view.displayTicTacToeTitle();
+        view.displayGomokuTitle();
         instancePlayer();
         Coordinates coordinates = new Coordinates();
         view.displayPlayersRepresentations();
 
         while (checkFullBoard() != 0 || !win) {
             player1.play((player1).getCoordinates(coordinates, size), board, size);
-            verifyWinConditions(player1, coordinates);
+            verifyEndConditions(player1, coordinates);
 
             player2.play((player2).getCoordinates(coordinates, size), board, size);
-            verifyWinConditions(player2, coordinates);
+            verifyEndConditions(player2, coordinates);
 
             if (win) break;
         }
     }
 
-    private void verifyWinConditions(Player player, Coordinates coordinates) {
+    private void verifyEndConditions(Player player, Coordinates coordinates) {
         checkFullBoard();
-        isWinning(coordinates);
+        isWinning();
 
         if (this.win) {
             view.displayWinnerGame(player);
@@ -185,7 +178,7 @@ public class TicTacToe extends BoardGame {
         return winCells;
     }
 
-    private void isWinning(Coordinates coordinates) {
+    private void isWinningOld(Coordinates coordinates) {
         int coordinateLine = coordinates.getLine();
         int coordinateColumn = coordinates.getColumn();
         ArrayList<String> arrayLine = new ArrayList<>(stockLineCells(coordinateLine));
@@ -204,8 +197,46 @@ public class TicTacToe extends BoardGame {
         }
     }
 
+    private boolean isWinning() {
+        boolean lineWin = false;
+        boolean colWin = false;
+        boolean firstDiagWin = false;
+        boolean secondDiagWin = false;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+
+                lineWin = check(i, j, i, j+1);
+
+                colWin = check(i, j, i+1, j);
+
+                firstDiagWin = check(i, j, i+1, j-1);
+
+                secondDiagWin = check(i, j, i-1, j-1);
+            }
+        }
+        if(lineWin || colWin || firstDiagWin || secondDiagWin) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean check(int i, int j, int a, int b){
+        boolean win = false;
+        int temp = 0;
+        if((a>=0 && a<size) && (b>=0 && b<size)) {
+            for (int k = 1; k <= 5; k++) {
+                if (board[i][j].getState() == board[a][b].getState()) {
+                    temp += 1;
+                }
+            }
+            if (temp == 5) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
 }
-
-
-
-

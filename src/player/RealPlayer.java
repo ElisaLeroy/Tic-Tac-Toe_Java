@@ -32,7 +32,7 @@ public class RealPlayer extends Player {
         try {
             if (!Objects.equals(board[line][column].getRepresentation(), "   ")) { //si la case est déjà occupée
                 view.displayWrongCell(); //affiche message erreur
-                play(getCoordinates(coordinates), board, size); //on relance le la partie
+                play(getCoordinates(coordinates, size), board, size); //on relance le la partie
             } else { //si la case est vide
                 Cell cell = board[line][column]; //ici, on vise la cellule seléctionnée par l'utilisateur
                 cell.setState(this.getState()); //on attribut
@@ -40,11 +40,11 @@ public class RealPlayer extends Player {
             }
         } catch (Exception e) {
             System.out.println("Invalid choice, please try again");
-            play(getCoordinates(coordinates), board, size);
+            play(getCoordinates(coordinates, size), board, size);
         }
     }
 
-    public Coordinates getCoordinates(Coordinates coordinates) {
+    public Coordinates getCoordinates(Coordinates coordinates, int size) {
         view.displayPlayerNameTurn(this.getName());
 
         view.displayMenuChoiceLine();

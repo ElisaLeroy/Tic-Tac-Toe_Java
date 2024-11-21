@@ -10,7 +10,7 @@ public abstract class Player {
     public Player() {
 
     }
-    public abstract Coordinates getCoordinates(Coordinates coordinates);
+    public abstract Coordinates getCoordinates(Coordinates coordinates, int size);
     public abstract void play(Coordinates coordinates, Cell[][] board, int size);
 
     public String getRepresentation() {
