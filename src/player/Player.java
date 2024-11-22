@@ -2,6 +2,7 @@ package player;
 import board.Cell;
 import board.Coordinates;
 import board.State;
+import game.GameType;
 
 public abstract class Player {
     private String name;
@@ -10,12 +11,12 @@ public abstract class Player {
     public Player() {
 
     }
-    public abstract Coordinates getCoordinates(Coordinates coordinates, int size);
-    public abstract void play(Coordinates coordinates, Cell[][] board, int size);
+    public abstract Coordinates getMove(Coordinates coordinates, int horizontalSize, int verticalSize, GameType gameType);
 
     public String getRepresentation() {
         return this.state.getType();
     }
+
     public void setState(State state) {
         this.state = state;
     }

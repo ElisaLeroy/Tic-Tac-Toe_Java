@@ -2,7 +2,7 @@ package game;
 
 /**
  * TicTacToe
- * This class contain Tic tac toe game rules and methods that run the game
+ * This class contains Tic tac toe game rules and methods that run the game
  */
 
 
@@ -12,62 +12,84 @@ import board.State;
 import player.ArtificialPlayer;
 import player.Player;
 import player.RealPlayer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.Objects;
 
 public class TicTacToe extends BoardGame {
-    private final int size;
+    private final int verticalBoardSize;
+    private final int horizontalBoardSize;
+
     private Cell[][] board;
     private View view;
     private UserInteraction userInteraction;
-    Player player1;
-    Player player2;
+    private Player player1;
+    private Player player2;
+    private int winCondition;
     private boolean win = false;
 
     public TicTacToe() {
-        view = new View();
+        super();
+        this.view = new View();
         this.userInteraction = new UserInteraction();
-        this.size = 15;
-        this.board = new Cell[size][size];
+        this.setGameType(GameType.TIC_TAC_TOE);
+        this.verticalBoardSize = 3;
+        this.horizontalBoardSize = 3;
+        this.board = new Cell[horizontalBoardSize][verticalBoardSize];
+        this.winCondition = 3;
     }
 
-    /**
-     * playGame
-     * This method run the game by calling other methods
-     */
     public void playGame() {
         fillBoard();
-        view.displayTicTacToeTitle();
+        view.displayTicTacToeTitle();;
         instancePlayer();
         Coordinates coordinates = new Coordinates();
         view.displayPlayersRepresentations();
 
         while (checkFullBoard() != 0 || !win) {
-            player1.play((player1).getCoordinates(coordinates, size), board, size);
-            verifyWinConditions(player1, coordinates);
 
-            player2.play((player2).getCoordinates(coordinates, size), board, size);
-            verifyWinConditions(player2, coordinates);
+            movePlayer(coordinates, getGameType(), player1);
+            verifyEndConditions(player1, coordinates);
+
+            movePlayer(coordinates, getGameType(), player2);
+            verifyEndConditions(player2, coordinates);
 
             if (win) break;
         }
     }
 
-    private void verifyWinConditions(Player player, Coordinates coordinates) {
-        checkFullBoard();
-        isWinning(coordinates);
-
-        if (this.win) {
+    private void verifyEndConditions(Player player, Coordinates coordinates) {
+        if (isWinning()) {
             view.displayWinnerGame(player);
             System.exit(0);
+        }
+        checkFullBoard();
+    }
+
+    public void movePlayer(Coordinates coordinates, GameType gameType, Player player) {
+        int line = coordinates.getLine();
+        int column = coordinates.getColumn();
+
+        try {
+            if (!Objects.equals(board[line][column].getRepresentation(), "   ")) { //si la case est déjà occupée
+                view.displayWrongCell();
+                player.getMove(coordinates,horizontalBoardSize, verticalBoardSize, getGameType());
+                movePlayer(coordinates, gameType, player); //on relance le la partie
+
+
+            } else { //si la case est vide
+                Cell cell = board[line][column]; //ici, on vise la cellule seléctionnée par l'utilisateur
+                cell.setState(player.getState()); //on attribut
+                view.displayBoard(horizontalBoardSize, verticalBoardSize, board); //on affiche la grille
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid choice, please try again");
+            movePlayer(coordinates, gameType, player);
         }
     }
 
     private void fillBoard() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < horizontalBoardSize; i++) {
+            for (int j = 0; j < verticalBoardSize; j++) {
                 board[i][j] = new Cell();
             }
         }
@@ -119,8 +141,8 @@ public class TicTacToe extends BoardGame {
 
     private int checkFullBoard() {
         int voidCell = 0;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < horizontalBoardSize; i++) {
+            for (int j = 0; j < verticalBoardSize; j++) {
                 if (board[i][j].getRepresentation().equals("   ")) {
                     voidCell += 1;
                 }
@@ -133,75 +155,97 @@ public class TicTacToe extends BoardGame {
         return voidCell;
     }
 
-    private ArrayList<String> stockFirstDiagonal() {
-        ArrayList<String> stockCells = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            stockCells.add(board[i][i].getRepresentation());
+    private boolean isWinning() {
+
+        for (int i = 0; i < horizontalBoardSize; i++) {
+            for (int j = 0; j < verticalBoardSize; j++) {
+                if (board[i][j].getState() != State.EMPTY) {
+
+                    if (checkLine(i, j)) {
+                        return true;
+                    }
+
+                    if (checkColumn(i, j)) {
+                        return true;
+                    }
+
+                    if (checkFirstDiagonal(i, j)) {
+                        return true;
+                    }
+                    if (checkSecondDiagonal(i, j)) {
+                        return true;
+                    }
+
+
+                }
+            }
         }
-        return stockCells;
+
+        return false;
     }
 
-    private ArrayList<String> stockSecondDiagonal() {
-        ArrayList<String> stockCells = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            stockCells.add(board[i][size - 1 - i].getRepresentation());
+    private boolean checkLine(int i, int j) {
+        int counter = 0;
+        for (int k = 1; k < winCondition; k++) {
+            if (    j + k >= 0
+                    && j + k < horizontalBoardSize
+                    && (board[i][j].getState() == board[i][j + k].getState())) {
+                counter += 1;
+            }
         }
-        return stockCells;
-    }
-
-    private ArrayList<String> stockLineCells(int coordinate) {
-        ArrayList<String> stockCells = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            stockCells.add(board[coordinate][i].getRepresentation());
-        }
-        return stockCells;
-    }
-
-    private ArrayList<String> stockColumnCells(int coordinate) {
-        ArrayList<String> stockCells = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            stockCells.add(board[i][coordinate].getRepresentation());
-        }
-        return stockCells;
-    }
-
-    private boolean checkEmptyCells(ArrayList<String> array) {
-        if (array.contains("   ")) {
+        if (counter == winCondition-1) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
-    private boolean checkElementsInArray(ArrayList<String> cells) {
-        boolean winCells = false;
-        ArrayList<String> listX = new ArrayList<>(Arrays.asList(" X ", " X ", " X "));
-        ArrayList<String> listO = new ArrayList<>(Arrays.asList(" O ", " O ", " O "));
-
-        //on compare la liste courante (ligne ou colonne) à l'une des liste modèle
-        if (cells.equals(listX) || cells.equals(listO)) {
-            winCells = true;
+    private boolean checkColumn(int i, int j) {
+        int counter = 0;
+        for (int k = 1; k < winCondition; k++) {
+            if (    i + k >= 0
+                    && i + k < verticalBoardSize
+                    && (board[i][j].getState() == board[i+k][j].getState())) {
+                counter += 1;
+            }
         }
-        return winCells;
+        if (counter == winCondition-1) {
+            return true;
+        }
+        return false;
     }
 
-    private void isWinning(Coordinates coordinates) {
-        int coordinateLine = coordinates.getLine();
-        int coordinateColumn = coordinates.getColumn();
-        ArrayList<String> arrayLine = new ArrayList<>(stockLineCells(coordinateLine));
-        ArrayList<String> arrayColumn = new ArrayList<>(stockColumnCells(coordinateColumn));
-        ArrayList<String> arrayFirstDiagonal = new ArrayList<>(stockFirstDiagonal());
-        ArrayList<String> arraySecondDiagonal = new ArrayList<>(stockSecondDiagonal());
-
-
-        Boolean line = checkElementsInArray(arrayLine);
-        Boolean column = checkElementsInArray(arrayColumn);
-        Boolean firstDiagonal = checkElementsInArray(arrayFirstDiagonal);
-        Boolean secondDiagonal = checkElementsInArray(arraySecondDiagonal);
-
-        if ((!checkEmptyCells(arrayLine) || !checkEmptyCells(arrayColumn) || !checkEmptyCells(arraySecondDiagonal) || !checkEmptyCells(arrayFirstDiagonal)) && (line || column || firstDiagonal || secondDiagonal)) {
-            this.win = true;
+    private boolean checkFirstDiagonal(int i, int j) {
+        int counter = 0;
+        for (int k = 1; k < winCondition; k++) {
+            if (    j - k >= 0
+                    && j - k < verticalBoardSize
+                    && i + k >=0
+                    && i + k < horizontalBoardSize
+                    && (board[i][j].getState() == board[i+k][j-k].getState())) {
+                counter += 1;
+            }
         }
+        if (counter == winCondition-1) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkSecondDiagonal(int i, int j) {
+        int counter = 0;
+        for (int k = 1; k < winCondition; k++) {
+            if (    j - k >= 0
+                    && j - k < verticalBoardSize
+                    && i - k >=0
+                    && i - k < horizontalBoardSize
+                    && (board[i][j].getState() == board[i-k][j-k].getState())) {
+                counter += 1;
+            }
+        }
+        if (counter == winCondition-1) {
+            return true;
+        }
+        return false;
     }
 
 }

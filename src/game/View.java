@@ -25,27 +25,17 @@ public class View {
     /**
      * displayMenuChoiceLine
      */
-    public void displayMenuChoiceLine(){
+    public void displayMenuChoiceLine(int verticalSize){
 
-        System.out.println("""
-                Choose the line
-                [1] First line
-                [2] Second line
-                [3] Third line
-                """);
+        System.out.println("Choose the column between 1 and "+ verticalSize);
+
     }
 
     /**
      * menuChoiceColumn
      */
-    public void displayMenuChoiceColumn(){
-        System.out.println("""
-                
-                Choose the column
-                [1] First column
-                [2] Second column
-                [3] Third column
-                """);
+    public void displayMenuChoiceColumn( int horizontalSize){
+        System.out.println("Choose the column between 1 and "+ horizontalSize);
     }
 
     /**
@@ -96,18 +86,14 @@ public class View {
                 """);
     }
 
-    /**
-     * displayBoard
-     * @param size
-     * @param board
-     */
-    public void displayBoard(int size, Cell[][] board) {
-        for (int i = 0; i < size; i++) {
-            System.out.print("\n-------------\n|");
-            for (int j = 0; j < size; j++) {
+    public void displayBoard(int numberOfLine, int numberOfColumn, Cell[][] board) {
+        for (int i = 0; i < numberOfLine; i++) {
+            System.out.print("\n*"+("---*".repeat(board[0].length))+"\n|");
+            for (int j = 0; j < numberOfColumn; j++) {
                 System.out.print(board[i][j].getRepresentation() + "|");
             }
         }
+        System.out.print("\n*"+("---*".repeat(board[0].length)));
     }
 
     /**
@@ -130,10 +116,12 @@ public class View {
      */
     public void displayEndGame() {
         System.out.println("""
-           *-------------*" +
-          "   End game " +
-          "There's no winner..." +
-          "*-------------*""");
+          
+          
+          *---------------------*
+            End game 
+            There's no winner...
+          *---------------------*""");
     }
 
     /**
