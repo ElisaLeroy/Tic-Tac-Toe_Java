@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 
 public class UserInteraction {
-    View view;
     public UserInteraction() {
-        view = new View();
     }
 
     /**

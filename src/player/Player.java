@@ -11,6 +11,8 @@ public abstract class Player {
     public Player() {
 
     }
+
+
     public abstract Coordinates getMove(Coordinates coordinates, int horizontalSize, int verticalSize, GameType gameType);
 
     public String getRepresentation() {

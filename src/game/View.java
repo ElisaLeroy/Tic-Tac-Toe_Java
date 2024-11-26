@@ -87,9 +87,9 @@ public class View {
     }
 
     public void displayBoard(int numberOfLine, int numberOfColumn, Cell[][] board) {
-        for (int i = 0; i < numberOfLine; i++) {
+        for (int i = 0; i < numberOfColumn; i++) {
             System.out.print("\n*"+("---*".repeat(board[0].length))+"\n|");
-            for (int j = 0; j < numberOfColumn; j++) {
+            for (int j = 0; j < numberOfLine; j++) {
                 System.out.print(board[i][j].getRepresentation() + "|");
             }
         }

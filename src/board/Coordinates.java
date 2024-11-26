@@ -5,7 +5,6 @@ public class Coordinates {
     private int column;
 
     public Coordinates() {
-
     }
 
 

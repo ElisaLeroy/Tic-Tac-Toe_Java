@@ -11,7 +11,7 @@ import player.RealPlayer;
 import java.util.InputMismatchException;
 import java.util.Objects;
 
-public class ConnectFour extends BoardGame {
+public class ConnectFour extends GameController {
 
     private final int boardLineNumber;
     private final int boardColumnNumber;
@@ -42,7 +42,7 @@ public class ConnectFour extends BoardGame {
         view.displayPlayersRepresentations();
 
         while (checkFullBoard() != 0 || !win) {
-            player1.getMove(coordinates, boardColumnNumber, boardLineNumber, getGameType());
+            player1.getMove(coordinates, boardLineNumber,boardColumnNumber , getGameType());
             movePlayer(coordinates, getGameType(), player1);
             verifyEndConditions(player1, coordinates);
 
@@ -62,13 +62,13 @@ public class ConnectFour extends BoardGame {
         try {
             if (!Objects.equals(board[line][column].getRepresentation(), "   ")) { //si la case est déjà occupée
                 view.displayWrongCell();
-                player.getMove(coordinates, boardColumnNumber, boardLineNumber, getGameType());
+                player.getMove(coordinates,boardColumnNumber, boardLineNumber, getGameType());
                 movePlayer(coordinates, gameType, player); //on relance le la partie
 
 
             } else { //si la case est vide
-                Cell cell = board[line][column]; //ici, on vise la cellule seléctionnée par l'utilisateur
-                cell.setState(player.getState()); //on attribut
+                //ici,
+                board[line][column].setState(player.getState()); //on vise la cellule seléctionnée par l'utilisateur et on lui attribut le state du player
                 view.displayBoard(boardColumnNumber, boardLineNumber, board); //on affiche la grille
             }
         } catch (Exception e) {
@@ -77,56 +77,37 @@ public class ConnectFour extends BoardGame {
         }
     }
 
-
     public void movePlayer(Coordinates coordinates, GameType gameType, Player player) {
         int column = coordinates.getColumn();
-        int tokenPositionLine = coordinates.getColumn();
-        boolean truc = true;
-
-        //ce que je veu :
-        //si la position suivante existe && si la position suivante est vide
-            // alors tokenPosition += 1;
-        //sinon
-            //truc = false
-        //
-
-        //si tokePosition existe && est disponible
-            //on change le state de la cellule par le state du player
-
-
-
+        int positionInColumn = 0;
 
         try {
-            while (truc) {
-                if (tokenPositionLine + 1 > 0
-                        && tokenPositionLine + 1 < boardLineNumber
-                        && board[column][tokenPositionLine + 1].getState() == State.EMPTY) {
 
-                    tokenPositionLine += 1; //on descend le pion d'une ligne
-                }
-                else {
-                    truc = false;
-                }
+            //ici, i représente la ligne de la colonne (on test donc toutes les lignes jusquèà trouver la dernière valide)
+            //la case i existe forcément car elle début à 0 et ne dépasse pas la taille de la colonne == donc pas besoin de tester ça
+//            for(int i=0; i <boardLineNumber; i++){
+//                if(board[column][i].getState() == State.EMPTY){ //si la case courante est vide on stock son index
+//                    positionInColumn = i;
+//                }else{
+//                    break;
+//                }
+//            }
+//            if (positionInColumn >= 0
+//                        && positionInColumn < boardLineNumber
+//                        && board[column][positionInColumn ].getState() == State.EMPTY) {
+//
+//                board[positionInColumn][column].setState(player.getState());
+//                view.displayBoard(boardColumnNumber,boardLineNumber, board);
+//            }else{
+//                System.out.println("non.");
+//            }
 
 
-            }
-            if (tokenPositionLine > 0
-                    && tokenPositionLine <= boardLineNumber
-                    && board[column][tokenPositionLine].getState() == State.EMPTY) {
-                board[column][tokenPositionLine].setState(player.getState());
-                view.displayBoard(boardLineNumber,boardColumnNumber, board);
-            }
-            else{
-                System.out.println("case indisponible");
-            }
 
-            //print le playerRepresentation à board[tokenposition][tokenPositionLine]
-
-             //on affiche la grille
+            //TODO: Check si la colonne choisie à une place, si oui on part du bas d ela colonne et on met le pion dans la première case vide qu'on trouve
 
         } catch (Exception e) {
-            System.out.println("Invalid choice, please try again");
-            movePlayer(coordinates, gameType, player);
+            System.out.println("non 2");
         }
     }
 
@@ -141,8 +122,8 @@ public class ConnectFour extends BoardGame {
     }
 
     private void fillBoard() {
-        for (int i = 0; i < boardColumnNumber; i++) {
-            for (int j = 0; j < boardLineNumber; j++) {
+        for (int i = 0; i <boardLineNumber ; i++) {
+            for (int j = 0; j < boardColumnNumber; j++) {
                 board[i][j] = new Cell();
             }
         }

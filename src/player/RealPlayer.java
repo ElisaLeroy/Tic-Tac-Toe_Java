@@ -25,14 +25,9 @@ public class RealPlayer extends Player {
         this.userInteraction = new UserInteraction();
     }
 
-
-
-
     public Coordinates getMove(Coordinates coordinates, int horizontalSize, int verticalSize, GameType gameType) {
-
         int column;
         int line;
-
         if (gameType == GameType.CONNECT_FOUR) {
             view.displayPlayerNameTurn(this.getName());
 
@@ -51,7 +46,6 @@ public class RealPlayer extends Player {
             coordinates.setLine(line);
             coordinates.setColumn(column);
         }
-
         return coordinates;
     }
 
@@ -66,6 +60,7 @@ public class RealPlayer extends Player {
         }
         return choice;
     }
+
 
 
 }
