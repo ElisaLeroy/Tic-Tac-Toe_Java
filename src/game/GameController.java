@@ -17,17 +17,19 @@ public class GameController {
     public void playGame(){
         instanceGameModel(gameType);
         game.fillBoard();
+        view.displayTitle(gameType);
         choosePlayer();
         while (!game.checkFullBoard()|| !game.isWinning()){
             view.displayPlayerTurn(game.getCurrentPlayerName());
             movePlayer();
             view.displayBoard(game.getVerticalBoardSize(), game.getHorizontalBoardSize(), game.getBoard());
-            view.displayBoard(game.getCoordinateLine(), game.getCoordinateColumn(), game.getBoard());
             if(game.checkFullBoard()){
                 view.displayNoWinner();
+                System.exit(0);
             }
             else if(game.isWinning()){
                 view.displayWinnerGame(game.getCurrentPlayerName());
+                System.exit(0);
             }
             else{
                 game.changeCurrentPlayer();
@@ -78,7 +80,7 @@ public class GameController {
         int choice2 = getSecureScanner();
         game.instanceSecondPlayer(choice2);
 
-
+        game.setCurrentPlayer(game.getPlayer1());
 
     }
     private void instanceGameModel(GameType gameType) {

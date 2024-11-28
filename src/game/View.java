@@ -9,10 +9,28 @@ import player.Player;
 
 public class View {
 
-    /**
-     * displayMenuChoosePlayer
-     * @param player
-     */
+
+    public void displayTitle(GameType gametype){
+        switch (gametype) {
+            case TIC_TAC_TOE:
+                System.out.println("""
+                        ╔═══════════════════════════════╗
+                        ║ ╔╦╗┬┌─┐  ╔╦╗┌─┐┌─┐  ╔╦╗┌─┐┌─┐ ║
+                        ║  ║ ││     ║ ├─┤│     ║ │ │├┤  ║
+                        ║  ╩ ┴└─┘   ╩ ┴ ┴└─┘   ╩ └─┘└─┘ ║
+                        ╚═══════════════════════════════╝
+                        """);
+                break;
+            case GOMOKU:
+                System.out.println(""" 
+                        ╔════════════════════╗
+                        ║ ╔═╗┌─┐┌┬┐┌─┐┬┌─┬ ┬ ║
+                        ║ ║ ╦│ │││││ │├┴┐│ │ ║
+                        ║ ╚═╝└─┘┴ ┴└─┘┴ ┴└─┘ ║
+                        ╚════════════════════╝
+                        """);
+        }
+    }
     public void displayMenuPlayerChoice(String player) {
         System.out.println("Please choose "+player +
                 """
@@ -21,71 +39,17 @@ public class View {
                         [2] Computer
                         """);
     }
-
-    /**
-     * displayMenuChoiceLine
-     */
     public void displayMenuChoiceLine(int verticalSize){
 
         System.out.println("Choose the column between 1 and "+ verticalSize);
 
     }
-
-    /**
-     * menuChoiceColumn
-     */
     public void displayMenuChoiceColumn( int horizontalSize){
         System.out.println("Choose the column between 1 and "+ horizontalSize);
     }
-
-    /**
-     * displayTittle
-     */
-    public void displayTicTacToeTitle(){
-        System.out.println(
-                                """
-                                         _____ _     _____         _____         \s
-                                        |_   _(_) __|_   _|_ _  __|_   _|__   ___\s
-                                          | | | |/ __|| |/ _` |/ __|| |/ _ \\ / _ \\
-                                          | | | | (__ | | (_| | (__ | | (_) |  __/
-                                          |_| |_|\\___||_|\\__,_|\\___||_|\\___/ \\___|
-                                        
-                                """
-        );
-    }
-
-    public void displayGomokuTitle(){
-        System.out.println(
-                """
-                          ____                       _         \s
-                         / ___| ___  _ __ ___   ___ | | ___   _\s
-                        | |  _ / _ \\| '_ ` _ \\ / _ \\| |/ / | | |
-                        | |_| | (_) | | | | | | (_) |   <| |_| |
-                         \\____|\\___/|_| |_| |_|\\___/|_|\\_\\\\__,_|
-                        
-                """
-        );
-    }
-
-    /**
-     * displayInvalidChoice
-     */
     public void displayInvalidChoice(){
         System.out.println("This cell is not empty, please try again");
     }
-
-    /**
-     * displayPlayersRepresentations
-     */
-    public void displayPlayersRepresentations(){
-        System.out.println("""
-                
-                
-                Player 1 -> X
-                Player 2 -> O
-                """);
-    }
-
     public void displayBoard(int numberOfLine, int numberOfColumn, Cell[][] board) {
         for (int i = 0; i < numberOfColumn; i++) {
             System.out.print("\n*"+("---*".repeat(board[0].length))+"\n|");
@@ -95,45 +59,32 @@ public class View {
         }
         System.out.print("\n*"+("---*".repeat(board[0].length)));
     }
-
-    /**
-     * displayPlayerNameTurn
-     * @param playerName
-     */
     public void displayPlayerTurn(String playerName){
         System.out.println("\n\n*-------------*\n "+ playerName + " turn\n"+"*-------------*\n");
     }
-
-    /**
-     * displayWrongCell
-     */
-    public void displayWrongCell(){
-        System.out.println("This cell is not empty, please try again");
-    }
-
-    /**
-     * displayEndGame
-     */
     public void displayNoWinner() {
         System.out.println("""
           
           
+                ╔═══════════╗
+                ║ ┌─┐┌┐┌┌┬┐ ║
+                ║ ├┤ │││ ││ ║
+                ║ └─┘┘└┘─┴┘ ║
+                ╚═══════════╝
+          
           *---------------------*
-            End game 
             There's no winner...
           *---------------------*""");
     }
-
-
     public void displayWinnerGame(String playerName){
         System.out.println(
-                """  
-                                                             _                     _\s
-                        \\ \\   / (_) ___| |_ ___  _ __ _   _  | |
-                         \\ \\ / /| |/ __| __/ _ \\| '__| | | | | |
-                          \\ V / | | (__| || (_) | |  | |_| | |_|
-                           \\_/  |_|\\___|\\__\\___/|_|   \\__, | (_)
-                                                      |___/    \s
+                """
+                        
+                        ╔══════════════════════╗
+                        ║ ╦  ╦┬┌─┐┌┬┐┌─┐┬─┐┬ ┬ ║
+                        ║ ╚╗╔╝││   │ │ │├┬┘└┬┘ ║
+                        ║  ╚╝ ┴└─┘ ┴ └─┘┴└─ ┴  ║
+                        ╚══════════════════════╝
                         """
         );
         System.out.println(playerName + " is the winner");

@@ -121,14 +121,14 @@ public abstract class GameModel {
     }
     private boolean checkLine(int i, int j) {
         int counter = 0;
-        for (int k = 1; k < alignCellsCondition; k++) {
+        for (int k = 1; k < this.alignCellsCondition; k++) {
             if (j + k >= 0
                     && j + k < horizontalBoardSize
                     && (board[i][j].getState() == board[i][j + k].getState())) {
                 counter += 1;
             }
         }
-        if (counter == alignCellsCondition - 1) {
+        if (counter == this.alignCellsCondition - 1) {
             return true;
         }
         return false;
@@ -181,6 +181,12 @@ public abstract class GameModel {
     }
 
 
+
+
+
+
+
+
     public int getCoordinateLine() {
         return coordinates.getLine();
     }
@@ -226,10 +232,16 @@ public abstract class GameModel {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
     public String getCurrentPlayerName() {
         return currentPlayer.getName();
     }
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+    public Player getPlayer1(){
+        return this.player1;
     }
 }
