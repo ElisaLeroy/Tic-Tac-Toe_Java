@@ -9,7 +9,7 @@ package game;
 import board.Cell;
 
 
-public class TicTacToe extends GameController {
+public class TicTacToe extends GameModel {
 
     public TicTacToe() {
         this.setGameType(GameType.TIC_TAC_TOE);
@@ -18,6 +18,8 @@ public class TicTacToe extends GameController {
         this.setVerticalBoardSize(3);
         this.setBoard(new Cell[this.getHorizontalBoardSize()][this.getVerticalBoardSize()]);
     }
+
+
 
 
 

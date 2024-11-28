@@ -71,7 +71,7 @@ public class View {
      * displayInvalidChoice
      */
     public void displayInvalidChoice(){
-        System.out.println("This choice is invalid, please try again");
+        System.out.println("This cell is not empty, please try again");
     }
 
     /**
@@ -100,7 +100,7 @@ public class View {
      * displayPlayerNameTurn
      * @param playerName
      */
-    public void displayPlayerNameTurn(String playerName){
+    public void displayPlayerTurn(String playerName){
         System.out.println("\n\n*-------------*\n "+ playerName + " turn\n"+"*-------------*\n");
     }
 
@@ -114,7 +114,7 @@ public class View {
     /**
      * displayEndGame
      */
-    public void displayEndGame() {
+    public void displayNoWinner() {
         System.out.println("""
           
           
@@ -124,11 +124,8 @@ public class View {
           *---------------------*""");
     }
 
-    /**
-     * displayWinnerGame
-     * @param player
-     */
-    public void displayWinnerGame(Player player){
+
+    public void displayWinnerGame(String playerName){
         System.out.println(
                 """  
                                                              _                     _\s
@@ -139,8 +136,10 @@ public class View {
                                                       |___/    \s
                         """
         );
-        System.out.println(player.getName() + " is the winner");
+        System.out.println(playerName + " is the winner");
     }
+
+
 
 
 

@@ -3,7 +3,7 @@ package game;
 import board.Cell;
 
 
-public class Gomoku extends GameController {
+public class Gomoku extends GameModel {
 
 
     public Gomoku() {

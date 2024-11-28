@@ -3,22 +3,22 @@ import board.Cell;
 import board.Coordinates;
 import board.State;
 import game.GameType;
+import game.PlayerType;
 
 public abstract class Player {
     private String name;
     private State state;
+    private PlayerType type;
 
     public Player() {
 
     }
 
 
-    public abstract Coordinates getMove(Coordinates coordinates, int horizontalSize, int verticalSize, GameType gameType);
 
     public String getRepresentation() {
         return this.state.getType();
     }
-
     public void setState(State state) {
         this.state = state;
     }
@@ -30,5 +30,11 @@ public abstract class Player {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public PlayerType getType() {
+        return type;
+    }
+    public void setType(PlayerType type) {
+        this.type = type;
     }
 }
