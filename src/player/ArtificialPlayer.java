@@ -15,13 +15,11 @@ import java.security.SecureRandom;
 import java.util.Objects;
 
 public class ArtificialPlayer extends Player {
-    View menuDisplay;
 
     public ArtificialPlayer(State state, String name ){
         this.setName(name);
         this.setState(state);
         this.setType(PlayerType.ARTIFICIAL);
-        this.menuDisplay = new View();
     }
 
 

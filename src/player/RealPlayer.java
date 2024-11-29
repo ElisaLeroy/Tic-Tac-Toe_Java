@@ -16,14 +16,12 @@ import game.View;
 import java.util.Objects;
 
 public class RealPlayer extends Player {
-    View view;
-    UserInteraction userInteraction;
+
 
     public RealPlayer(State state, String name) {
         this.setName(name);
         this.setState(state);
         this.setType(PlayerType.REAL);
-        this.view = new View();
-        this.userInteraction = new UserInteraction();
+
     }
 }

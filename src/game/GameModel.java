@@ -182,11 +182,6 @@ public abstract class GameModel {
 
 
 
-
-
-
-
-
     public int getCoordinateLine() {
         return coordinates.getLine();
     }

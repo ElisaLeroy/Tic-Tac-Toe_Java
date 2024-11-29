@@ -5,11 +5,22 @@ package game;
  */
 
 import board.Cell;
-import player.Player;
 
 public class View {
 
 
+    public void displayLaunchGame() {
+        System.out.println("""
+                
+                ╔════════════════════════════════════════════╗
+                ║                                            ║
+                ║ ╦═╗┌─┐┌─┐┌┬┐┬ ┬  ╔╦╗┌─┐  ╔═╗┬  ┌─┐┬ ┬  ┌─┐ ║
+                ║ ╠╦╝├┤ ├─┤ ││└┬┘   ║ │ │  ╠═╝│  ├─┤└┬┘   ┌┘ ║
+                ║ ╩╚═└─┘┴ ┴─┴┘ ┴    ╩ └─┘  ╩  ┴─┘┴ ┴ ┴    o  ║
+                ║                                            ║
+                ╚════════════════════════════════════════════╝
+                """);
+    }
     public void displayTitle(GameType gametype){
         switch (gametype) {
             case TIC_TAC_TOE:
@@ -31,23 +42,7 @@ public class View {
                         """);
         }
     }
-    public void displayMenuPlayerChoice(String player) {
-        System.out.println("Please choose "+player +
-                """
-                        
-                        [1] Real player 
-                        [2] Computer
-                        """);
-    }
-    public void displayMenuChoiceLine(int verticalSize){
-
-        System.out.println("Choose the column between 1 and "+ verticalSize);
-
-    }
-    public void displayMenuChoiceColumn( int horizontalSize){
-        System.out.println("Choose the column between 1 and "+ horizontalSize);
-    }
-    public void displayInvalidChoice(){
+    public void displayInvalidCell(){
         System.out.println("This cell is not empty, please try again");
     }
     public void displayBoard(int numberOfLine, int numberOfColumn, Cell[][] board) {
@@ -89,7 +84,38 @@ public class View {
         );
         System.out.println(playerName + " is the winner");
     }
+    public void displayInvalidChoice(){
+        System.out.println("""
+                /!\\ This choice is invalid, please try again /!\\
+                """);
+    }
 
+    public void displayMenuChoiceGame(){
+        System.out.println("""
+                *----------------------*
+                    Choose your game
+                *----------------------*
+                
+                [1] Tic Tac Toe
+                [2] Gomoku
+                """);
+    }
+    public void displayMenuPlayerChoice(String player) {
+        System.out.println("Please choose "+player +
+                """
+                        
+                        [1] Real player 
+                        [2] Computer
+                        """);
+    }
+    public void displayMenuChoiceLine(int verticalSize){
+
+        System.out.println("Choose the column between 1 and "+ verticalSize);
+
+    }
+    public void displayMenuChoiceColumn( int horizontalSize){
+        System.out.println("Choose the column between 1 and "+ horizontalSize);
+    }
 
 
 

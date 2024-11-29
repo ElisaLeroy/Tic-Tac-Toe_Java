@@ -41,7 +41,7 @@ public class GameController {
             game.updateBoard();
         }
         else{
-            view.displayInvalidChoice();
+            view.displayInvalidCell();
             movePlayer();
         }
     }
@@ -66,7 +66,7 @@ public class GameController {
             try {
                 choice = interaction.scannerInt();
             } catch (Exception e) {
-                view.displayInvalidChoice();
+                view.displayInvalidCell();
             }
         }
         return choice;
