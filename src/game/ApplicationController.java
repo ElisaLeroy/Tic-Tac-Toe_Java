@@ -47,6 +47,9 @@ public class ApplicationController {
             case 2 :
                 this.game = new GameController(GameType.GOMOKU);
                 break;
+            case 3:
+                this.game = new GameController(GameType.CONNECT_FOUR);
+                break;
             default:
                 view.displayInvalidChoice();
                 Main.main(null);

@@ -1,5 +1,7 @@
 package game;
 
+import board.BoardGameModel;
+
 /**
  * Controller class responsible for managing the flow of a game session.
  * It handles game initialization, player actions, and game progression.
@@ -8,6 +10,7 @@ package game;
 public class GameController {
     private GameType gameType;
     private GameModel game;
+    private BoardGameModel boardGame;
 
     private View view;
     private UserInteraction interaction;
@@ -31,23 +34,28 @@ public class GameController {
      */
     public void playGame() {
         instanceGameModel(gameType);
-        game.fillBoard();
+        instanceBoardGameModel
+        boardGame.fillBoard();
         view.displayTitle(gameType);
         choosePlayer();
-        while (!game.checkFullBoard() || !game.isWinning()) {
+        while (!boardGame.checkFullBoard() || !boardGame.isWinningBoard(game.getAlignCellsCondition())) {
             view.displayPlayerTurn(game.getCurrentPlayerName());
             movePlayer();
-            view.displayBoard(game.getVerticalBoardSize(), game.getHorizontalBoardSize(), game.getBoard());
-            if (game.checkFullBoard()) {
+            view.displayBoard(boardGame.getVerticalBoardSize(), boardGame.getHorizontalBoardSize(), boardGame.getBoard());
+            if (boardGame.checkFullBoard()) {
                 view.displayNoWinner();
                 System.exit(0);
-            } else if (game.isWinning()) {
+            } else if (boardGame.isWinningBoard(game.getAlignCellsCondition())) {
                 view.displayWinnerGame(game.getCurrentPlayerName());
                 System.exit(0);
             } else {
                 game.changeCurrentPlayer();
             }
         }
+    }
+
+    private void instanceBoardGameModel(int verticalBoardSize, int horizontalBoardSize) {
+        this.boardGame = new BoardGameModel(verticalBoardSize, horizontalBoardSize);
     }
 
     private void movePlayer() {
@@ -68,7 +76,6 @@ public class GameController {
             line = getSecureScanner() - 1;
             view.displayMenuChoiceColumn(game.getHorizontalBoardSize());
             column = getSecureScanner() - 1;
-
         } else {
             line = game.getRandomLineIndex();
             column = game.getRandomColumnIndex();
@@ -109,8 +116,10 @@ public class GameController {
             case GOMOKU:
                 this.game = new Gomoku();
                 break;
+            case CONNECT_FOUR:
+                this.game = new ConnectFour();
+                break;
         }
     }
-
 
 }

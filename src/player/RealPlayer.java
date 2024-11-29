@@ -17,7 +17,6 @@ import java.util.Objects;
 
 public class RealPlayer extends Player {
 
-
     public RealPlayer(State state, String name) {
         this.setName(name);
         this.setState(state);

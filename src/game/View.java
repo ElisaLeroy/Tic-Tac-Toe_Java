@@ -31,6 +31,7 @@ public class View {
         switch (gametype) {
             case TIC_TAC_TOE:
                 System.out.println("""
+                        
                         ╔═══════════════════════════════╗
                         ║ ╔╦╗┬┌─┐  ╔╦╗┌─┐┌─┐  ╔╦╗┌─┐┌─┐ ║
                         ║  ║ ││     ║ ├─┤│     ║ │ │├┤  ║
@@ -40,12 +41,27 @@ public class View {
                 break;
             case GOMOKU:
                 System.out.println(""" 
+                        
                         ╔════════════════════╗
                         ║ ╔═╗┌─┐┌┬┐┌─┐┬┌─┬ ┬ ║
                         ║ ║ ╦│ │││││ │├┴┐│ │ ║
                         ║ ╚═╝└─┘┴ ┴└─┘┴ ┴└─┘ ║
                         ╚════════════════════╝
                         """);
+                break;
+            case CONNECT_FOUR:
+                System.out.println("""
+                        
+                        ╔═════════════════════════════════════╗
+                        ║                                     ║
+                        ║ ╔═╗┌─┐┌┐┌┌┐┌┌─┐┌─┐┌┬┐  ╔═╗┌─┐┬ ┬┬─┐ ║
+                        ║ ║  │ │││││││├┤ │   │   ╠╣ │ ││ │├┬┘ ║
+                        ║ ╚═╝└─┘┘└┘┘└┘└─┘└─┘ ┴   ╚  └─┘└─┘┴└─ ║
+                        ║                                     ║
+                        ╚═════════════════════════════════════╝
+                        """);
+                break;
+
         }
     }
     public void displayInvalidCell(){
@@ -105,6 +121,7 @@ public class View {
                 
                 [1] Tic Tac Toe
                 [2] Gomoku
+                [3] Connect 4
                 """);
     }
     public void displayMenuPlayerChoice(String player) {
