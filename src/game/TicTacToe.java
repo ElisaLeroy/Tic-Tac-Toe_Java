@@ -1,8 +1,8 @@
 package game;
 
 /**
- * TicTacToe
- * This class contains Tic tac toe game rules and methods that run the game
+ * Represents the TicTacToe game.
+ * In TicTacToe, players aim to align three marks (either X or O) in a row on a 3x3 board.
  */
 
 

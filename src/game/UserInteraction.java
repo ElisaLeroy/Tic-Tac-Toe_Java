@@ -1,7 +1,7 @@
 package game;
 /**
  * UserInteraction
- * This class contains scanners to interact with user
+ * This class contains scanner to interact with user
  */
 import java.util.InputMismatchException;
 import java.util.Scanner;

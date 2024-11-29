@@ -1,4 +1,9 @@
 package player;
+/**
+ * Abstract class representing a player in the game.
+ * The player can either be a human or the system.
+ */
+
 import board.Cell;
 import board.Coordinates;
 import board.State;

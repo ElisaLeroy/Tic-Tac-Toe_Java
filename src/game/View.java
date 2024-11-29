@@ -1,14 +1,20 @@
 package game;
+
 /**
  * View
- * This class contains all the display part of the game (in console)
+ *
+ * The View class is responsible for displaying various outputs to the console
+ * during the game. It handles user prompts, game state visualizations,
+ * and messages for different scenarios such as errors, victories, or invalid inputs.
+ *
+ * @see board.Cell
+ * @see GameType
  */
+
 
 import board.Cell;
 
 public class View {
-
-
     public void displayLaunchGame() {
         System.out.println("""
                 
@@ -90,6 +96,7 @@ public class View {
                 """);
     }
 
+
     public void displayMenuChoiceGame(){
         System.out.println("""
                 *----------------------*
@@ -109,9 +116,7 @@ public class View {
                         """);
     }
     public void displayMenuChoiceLine(int verticalSize){
-
         System.out.println("Choose the column between 1 and "+ verticalSize);
-
     }
     public void displayMenuChoiceColumn( int horizontalSize){
         System.out.println("Choose the column between 1 and "+ horizontalSize);

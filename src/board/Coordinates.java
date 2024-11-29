@@ -1,5 +1,8 @@
 package board;
-
+/**
+ * Represents the coordinates of a cell on the game board.
+ * Consists of a line (row) and a column.
+ */
 public class Coordinates {
 
     public final static int DEFAULT = -1;
@@ -10,11 +13,9 @@ public class Coordinates {
     public Coordinates() {
         this(DEFAULT);
     }
-
     public Coordinates(int column) {
         this(DEFAULT, column);
     }
-
     public Coordinates(int line, int column) {
         this.line = line;
         this.column = column;

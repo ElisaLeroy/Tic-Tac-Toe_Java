@@ -1,5 +1,9 @@
 package game;
 
+/**
+ * Represents the Gomoku game.
+ * In Gomoku, players aim to align five marks (either X or O) in a row on a 15x15 board.
+ */
 import board.Cell;
 
 

@@ -1,5 +1,10 @@
 package game;
 
+/**
+ * Controller class responsible for managing the flow of the game application.
+ * It handles the user's game selection and starts the chosen game.
+ */
+
 public class ApplicationController {
     private View view;
     private UserInteraction interaction;
@@ -11,6 +16,10 @@ public class ApplicationController {
     }
 
 
+    /**
+     * Displays the game launch screen and prompts the user to choose a game.
+     * After the user makes a choice, the selected game is started.
+     */
     public void chooseGame() {
         view.displayLaunchGame();
         view.displayMenuChoiceGame();

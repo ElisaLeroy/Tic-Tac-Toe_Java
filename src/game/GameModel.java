@@ -1,4 +1,7 @@
 package game;
+/**
+ * Abstract class representing the core logic of a game.
+ */
 
 import board.Cell;
 import board.Coordinates;
@@ -26,7 +29,9 @@ public abstract class GameModel {
 
     public GameModel() {
     }
-
+    /**
+     * Fills the game board with empty cells.
+     */
     protected void fillBoard() {
         for (int i = 0; i < horizontalBoardSize; i++) {
             for (int j = 0; j < verticalBoardSize; j++) {
@@ -34,6 +39,12 @@ public abstract class GameModel {
             }
         }
     }
+
+    /**
+     * Initializes the first player based on the selected type (real or artificial).
+     *
+     * @param type the type of player (1 for real, 2 for artificial).
+     */
     protected void instanceFirstPlayer(int type) {
         switch (type) {
             case 1:
@@ -44,6 +55,12 @@ public abstract class GameModel {
                 break;
         }
     }
+
+    /**
+     * Initializes the second player based on the selected type (real or artificial).
+     *
+     * @param type the type of player (1 for real, 2 for artificial).
+     */
     protected void instanceSecondPlayer(int type) {
         switch (type) {
             case 1:
@@ -54,6 +71,12 @@ public abstract class GameModel {
                 break;
         }
     }
+
+    /**
+     * Checks if the board is full.
+     *
+     * @return true if the board is full, false otherwise.
+     */
     protected boolean checkFullBoard() {
         int voidCell = 0;
         for (int i = 0; i < horizontalBoardSize; i++) {
@@ -68,32 +91,64 @@ public abstract class GameModel {
         } else {
             return false;
         }
-    }  ////
+    }
+
+    /**
+     * Sets the coordinates for the current player's move.
+     *
+     * @param line the row coordinate of the move.
+     * @param column the column coordinate of the move.
+     */
     protected void setCoordinates(int line, int column) {
         this.coordinates = new Coordinates(line, column);
         ;
     }
-    protected PlayerType getCurrentPlayerType() {
-        return currentPlayer.getType();
-    }
+
+    /**
+     * Generates a random column index within the board's bounds.
+     *
+     * @return a random column index.
+     */
     protected int getRandomColumnIndex() {
         SecureRandom secureRandom = new SecureRandom();
         return secureRandom.nextInt(verticalBoardSize);
     }
+
+    /**
+     * Generates a random line index within the board's bounds.
+     *
+     * @return a random line index.
+     */
     protected int getRandomLineIndex() {
         SecureRandom secureRandom = new SecureRandom();
         return secureRandom.nextInt(horizontalBoardSize);
     }
+
+    /**
+     * Updates the board with the current player's state at the specified coordinates.
+     */
     protected void updateBoard() {
         this.board[coordinates.getLine()][coordinates.getColumn()].setState(currentPlayer.getState());
     }
-    protected boolean isCellValid() {
+
+    /**
+     * Checks if the selected cell is empty.
+     *
+     * @return true if the cell is empty, false otherwise.
+     */
+    protected boolean isCellEmpty() {
         if (Objects.equals(this.board[coordinates.getLine()][coordinates.getColumn()].getState(), State.EMPTY)) {
             return true;
         } else {
             return false;
         }
     }
+
+    /**
+     * Checks if there is a winner by evaluating rows, columns, and diagonals.
+     *
+     * @return true if a player has won, false otherwise.
+     */
     protected boolean isWinning() {
         for (int i = 0; i < horizontalBoardSize; i++) {
             for (int j = 0; j < verticalBoardSize; j++) {
@@ -109,16 +164,14 @@ public abstract class GameModel {
         }
         return false;
     }
-    protected void changeCurrentPlayer(){
-        switch (currentPlayer.getName()) {
-            case "Player 1":
-                this.currentPlayer = player2;
-                break;
-            case "Player 2":
-                this.currentPlayer = player1;
-                break;
-        }
-    }
+
+    /**
+     * Checks if there is a winning line starting from the specified cell.
+     *
+     * @param i the row index of the starting cell.
+     * @param j the column index of the starting cell.
+     * @return true if a winning line is found, false otherwise.
+     */
     private boolean checkLine(int i, int j) {
         int counter = 0;
         for (int k = 1; k < this.alignCellsCondition; k++) {
@@ -133,6 +186,14 @@ public abstract class GameModel {
         }
         return false;
     }
+
+    /**
+     * Checks if there is a winning column starting from the specified cell.
+     *
+     * @param i the row index of the starting cell.
+     * @param j the column index of the starting cell.
+     * @return true if a winning column is found, false otherwise.
+     */
     private boolean checkColumn(int i, int j) {
         int counter = 0;
         for (int k = 1; k < alignCellsCondition; k++) {
@@ -147,6 +208,14 @@ public abstract class GameModel {
         }
         return false;
     }
+
+    /**
+     * Checks if there is a winning diagonal (top-left to bottom-right) starting from the specified cell.
+     *
+     * @param i the row index of the starting cell.
+     * @param j the column index of the starting cell.
+     * @return true if a winning diagonal is found, false otherwise.
+     */
     private boolean checkFirstDiagonal(int i, int j) {
         int counter = 0;
         for (int k = 1; k < alignCellsCondition; k++) {
@@ -163,6 +232,14 @@ public abstract class GameModel {
         }
         return false;
     }
+
+    /**
+     * Checks if there is a winning diagonal (top-right to bottom-left) starting from the specified cell.
+     *
+     * @param i the row index of the starting cell.
+     * @param j the column index of the starting cell.
+     * @return true if a winning diagonal is found, false otherwise.
+     */
     private boolean checkSecondDiagonal(int i, int j) {
         int counter = 0;
         for (int k = 1; k < alignCellsCondition; k++) {
@@ -180,8 +257,34 @@ public abstract class GameModel {
         return false;
     }
 
+    /**
+     * Switches the current player to the next player.
+     */
+    protected void changeCurrentPlayer(){
+        switch (currentPlayer.getName()) {
+            case "Player 1":
+                this.currentPlayer = player2;
+                break;
+            case "Player 2":
+                this.currentPlayer = player1;
+                break;
+        }
+    }
+
+    /**
+     * Returns the type of the current player (REAL or ARTIFICIAL).
+     *
+     * @return the current player's type.
+     */
+    protected PlayerType getCurrentPlayerType() {
+        return currentPlayer.getType();
+    }
 
 
+
+
+
+    // Getter and Setter methods for various properties
     public int getCoordinateLine() {
         return coordinates.getLine();
     }
