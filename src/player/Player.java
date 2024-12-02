@@ -14,6 +14,9 @@ public abstract class Player {
     private String name;
     private State state;
     private PlayerType type;
+    private Player player1;
+    private Player player2;
+    private Player currentPlayer;
 
     public Player() {
 
@@ -21,9 +24,6 @@ public abstract class Player {
 
 
 
-    public String getRepresentation() {
-        return this.state.getType();
-    }
     public void setState(State state) {
         this.state = state;
     }

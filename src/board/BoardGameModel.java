@@ -11,6 +11,7 @@ public class BoardGameModel {
     public BoardGameModel(int verticalBoardSize, int horizontalBoardSize) {
         this.verticalBoardSize = verticalBoardSize;
         this.horizontalBoardSize = horizontalBoardSize;
+        this.board = new Cell[verticalBoardSize][horizontalBoardSize];
     }
 
 
@@ -18,7 +19,7 @@ public class BoardGameModel {
     public void fillBoard() {
         for (int i = 0; i < horizontalBoardSize; i++) {
             for (int j = 0; j < verticalBoardSize; j++) {
-                board[i][j] = new Cell();
+                board[i][j] = new Cell();  //board = null
             }
         }
     }
@@ -38,10 +39,10 @@ public class BoardGameModel {
         }
     }
 
-    protected void updateBoard(State currentPlayerState, int line, int column) {
+    public void updateBoard(State currentPlayerState, int line, int column) {
         this.board[line][column].setState(currentPlayerState);
     }
-    protected boolean isCellEmpty(int line, int column) {
+    public boolean isCellEmpty(int line, int column) {
         if (Objects.equals(this.board[line][column].getState(), State.EMPTY)) {
             return true;
         } else {
@@ -125,9 +126,6 @@ public class BoardGameModel {
     }
 
 
-
-
-
     public int getVerticalBoardSize() {
         return verticalBoardSize;
     }
@@ -138,14 +136,6 @@ public class BoardGameModel {
         return board;
     }
 
-    public void setVerticalBoardSize(int verticalBoardSize) {
-        verticalBoardSize = verticalBoardSize;
-    }
-    public void setHorizontalBoardSize(int horizontalBoardSize) {
-        horizontalBoardSize = horizontalBoardSize;
-    }
 
-
-    //setBoard
 
 }

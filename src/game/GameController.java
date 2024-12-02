@@ -34,7 +34,7 @@ public class GameController {
      */
     public void playGame() {
         instanceGameModel(gameType);
-        instanceBoardGameModel
+        instanceBoardGameModel(game.getVerticalBoardSize(), game.getHorizontalBoardSize());
         boardGame.fillBoard();
         view.displayTitle(gameType);
         choosePlayer();
@@ -44,14 +44,17 @@ public class GameController {
             view.displayBoard(boardGame.getVerticalBoardSize(), boardGame.getHorizontalBoardSize(), boardGame.getBoard());
             if (boardGame.checkFullBoard()) {
                 view.displayNoWinner();
+                endGameChoices();
+
                 System.exit(0);
             } else if (boardGame.isWinningBoard(game.getAlignCellsCondition())) {
                 view.displayWinnerGame(game.getCurrentPlayerName());
-                System.exit(0);
+                endGameChoices();
             } else {
                 game.changeCurrentPlayer();
             }
         }
+
     }
 
     private void instanceBoardGameModel(int verticalBoardSize, int horizontalBoardSize) {
@@ -60,8 +63,8 @@ public class GameController {
 
     private void movePlayer() {
         getNewPositionCoordinates();
-        if (game.isCellEmpty()) {
-            game.updateBoard();
+        if (boardGame.isCellEmpty(game.getCoordinateLine(), game.getCoordinateColumn())) {
+            boardGame.updateBoard(game.getCurrentPlayerRepresentation() ,game.getCoordinateLine(), game.getCoordinateColumn());
         } else {
             view.displayInvalidCell();
             movePlayer();
@@ -77,8 +80,8 @@ public class GameController {
             view.displayMenuChoiceColumn(game.getHorizontalBoardSize());
             column = getSecureScanner() - 1;
         } else {
-            line = game.getRandomLineIndex();
-            column = game.getRandomColumnIndex();
+            line = game.getRandomLineIndex(boardGame.getHorizontalBoardSize());
+            column = game.getRandomColumnIndex(boardGame.getVerticalBoardSize());
         }
         game.setCoordinates(line, column);
     }
@@ -116,10 +119,29 @@ public class GameController {
             case GOMOKU:
                 this.game = new Gomoku();
                 break;
-            case CONNECT_FOUR:
-                this.game = new ConnectFour();
-                break;
+
         }
+    }
+
+
+    private void endGameChoices(){
+        view.displayMenuRestart();
+        int choice = getSecureScanner();
+
+        switch (choice){
+            case 1:
+                Main.main(null);
+                break;
+            case 2:
+                System.exit(0);
+                break;
+            default:
+                view.displayInvalidChoice();
+                endGameChoices();
+                break;
+
+        }
+
     }
 
 }

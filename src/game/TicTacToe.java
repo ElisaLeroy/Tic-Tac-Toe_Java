@@ -16,7 +16,6 @@ public class TicTacToe extends GameModel {
         this.setAlignCellsCondition(3);
         this.setHorizontalBoardSize(3);
         this.setVerticalBoardSize(3);
-        this.setBoard(new Cell[this.getHorizontalBoardSize()][this.getVerticalBoardSize()]);
     }
 
 

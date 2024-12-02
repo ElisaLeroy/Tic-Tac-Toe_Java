@@ -15,7 +15,6 @@ public class Gomoku extends GameModel {
         this.setAlignCellsCondition(5);
         this.setHorizontalBoardSize(15);
         this.setVerticalBoardSize(15);
-        this.setBoard(new Cell[this.getHorizontalBoardSize()][this.getVerticalBoardSize()]);
     }
 
 

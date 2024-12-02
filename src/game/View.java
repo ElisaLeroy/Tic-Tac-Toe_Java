@@ -121,7 +121,6 @@ public class View {
                 
                 [1] Tic Tac Toe
                 [2] Gomoku
-                [3] Connect 4
                 """);
     }
     public void displayMenuPlayerChoice(String player) {
@@ -137,6 +136,18 @@ public class View {
     }
     public void displayMenuChoiceColumn( int horizontalSize){
         System.out.println("Choose the column between 1 and "+ horizontalSize);
+    }
+    public void displayMenuRestart(){
+        System.out.println(
+                """
+                *-----------------------*
+                       What next ?
+                *-----------------------*
+                
+                [1] Start a new game
+                [2] Exit 
+                        """
+        );
     }
 
 
